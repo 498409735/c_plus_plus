@@ -14,14 +14,14 @@ string Player::getName() const{
     return this->name;
 }
 void Player::initWeapon(){
-    string name;
+    string name_tmp;
     int hurt;
     for(int i=0;i<WEAPON_NUM;i++){
         cout<<"ÇëÊäÈëÎäÆ÷Ãû³Æ"<<endl;
-        cin>>name;
+        cin>>name_tmp;
         cout<<"ÇëÊäÈëÎäÆ÷¹¥»÷Á¦:"<<endl;
         cin>>hurt;
-        this->m_weapon[i] = new Weapon(name,hurt);
+        this->m_weapon[i] = new Weapon(name_tmp,hurt);
     }
 }
 int Player::getBlood()const{
