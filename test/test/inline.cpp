@@ -2,40 +2,39 @@
 
 using namespace std;
 
-
-template <typename T>
-T add(const T& a,const T&b){
-    cout<<"add"<<endl;
-    return a+b;
-}
-template <typename T>
-int compare(const T&a,const T&b){
-    if(a>b)return 1;
-    else if(a<b)return -1;
-    else return 0;
-}
-template <>
-int compare(const string&a,const string&b){
-    cout<<"stirng特化"<<endl;
-    if(a>b)return 1;
-    else if(a<b)return -1;
-    else return 0;
-}
-int main(){
-    int s1 = 2,s2 =3;
-    int s3;
-    s3 = add(s1,s2);
-    cout<<"add="<<s3<<endl;
-    cout<<"compare s1,s2 ="<<compare(s1,s2)<<endl;
-    double d1 = 2.3,d2 = 3.4;
-    double d3 = add(d1,d2);
-    cout<<"double add ="<<d3<<endl;
-    cout<<"compare d1,d2 ="<<compare(d2,d1)<<endl;
-    string str1 ="hello",str2 = "world";
-     cout<<"compare str1,str1 ="<<compare(str1,str1)<<endl;
-    cout<<"compare str1,str2 ="<<compare(str1,str2)<<endl;
-    return 0;
-}
+//template <typename T>
+//T add(const T& a,const T&b){
+//    cout<<"add"<<endl;
+//    return a+b;
+//}
+//template <typename T>
+//int compare(const T&a,const T&b){
+//    if(a>b)return 1;
+//    else if(a<b)return -1;
+//    else return 0;
+//}
+//template <>
+//int compare(const string&a,const string&b){
+//    cout<<"stirng特化"<<endl;
+//    if(a>b)return 1;
+//    else if(a<b)return -1;
+//    else return 0;
+//}
+//int main(){
+//    int s1 = 2,s2 =3;
+//    int s3;
+//    s3 = add(s1,s2);
+//    cout<<"add="<<s3<<endl;
+//    cout<<"compare s1,s2 ="<<compare(s1,s2)<<endl;
+//    double d1 = 2.3,d2 = 3.4;
+//    double d3 = add(d1,d2);
+//    cout<<"double add ="<<d3<<endl;
+//    cout<<"compare d1,d2 ="<<compare(d2,d1)<<endl;
+//    string str1 ="hello",str2 = "world";
+//     cout<<"compare str1,str1 ="<<compare(str1,str1)<<endl;
+//    cout<<"compare str1,str2 ="<<compare(str1,str2)<<endl;
+//    return 0;
+//}
 //template <typename T1>
 //void bubble(T1* t1,const int len){
 //    int i,j;
@@ -67,38 +66,63 @@ int main(){
 //    print(num,5);
 //    return 0;
 //}
-//class Complex
-//{
-//public:
+class Complex
+{
+public:
 //    Complex(const int r = 0,const int i=0):
 //    real(r),img(i){
 //        cout<<"构造了("<<this->real<<","<<this->img<<")"<<endl;
 //    }
-////    Complex (int r)
+//    Complex (int r)
 //    Complex(const Complex&other){
 //        this->real = other.real;
 //        this->img = other.img;
 //        cout<<"copy 构造了("<<this->real<<","<<this->img<<")"<<endl;
 //    }
-//    Complex operator + (const Complex &other){
-//        Complex tmp;
-//        tmp.real = this->real+other.real;
-//        tmp.img = this->img+other.img;
-//        return tmp;
-//    }
-//    void printinfo()const{
-//        cout<<"复数("<<this->real<<","<<this->img<<")"<<endl;
-//    }
-//private:
-//    int real,img;
-//};
-//int main(){
-//    Complex c1(1,1);
-//    Complex c2;
+    Complex operator + (const Complex &other){
+        Complex tmp;
+        tmp.real = this->real+other.real;
+        tmp.img = this->img+other.img;
+        return tmp;
+    }
+    Complex operator +(int&n){
+        this->real +=n;
+        return *this;
+    }
+    Complex(const int r = 0,const int i = 0)
+        :real(r),img(i){
+        cout<<"create ("<<real<<","<<img<<")"<<endl;
+    }
+    Complex(const Complex&other){
+        real = other.real;
+        img = other.img;
+        cout<<"copy create"<<real<<","<<img<<")"<<endl;
+    }
+    operator int(){
+        return int(this->real);
+    }
+    operator float(){
+        return float(this->real);
+    }
+    void printinfo()const{
+        cout<<"复数("<<this->real<<","<<this->img<<")"<<endl;
+    }
+private:
+    int real,img;
+};
+int main(){
+    Complex c1(1,1);
+    Complex c2=Complex(20)+c1;
+
+    c2.printinfo();
+    cout<<int(c2)*10<<endl;
+    cout<<int(c2)+10.2<<endl;
+    Complex c3 = Complex(20);
+//    Complex c3 = c1;
 //    c2 = c1+20;
 //    c2.printinfo();
-//    return 0;
-//}
+    return 0;
+}
 //class Point
 //{
 //public:
