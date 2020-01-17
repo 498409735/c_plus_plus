@@ -8,6 +8,9 @@ public:
     A() {
         cout<<"构造A"<<endl;
     }
+     void play(){
+        cout<<"A play"<<endl;
+    }
     virtual ~A(){
         cout<<"析构A"<<endl;
     }
@@ -18,13 +21,18 @@ public:
     B() {
         cout<<"构造B"<<endl;
     }
+     void play(){
+        cout<<"B::A play"<<endl;
+    }
     ~B(){
         cout<<"析构B"<<endl;
     }
 };
 int main(){
-    A*pA = new B;
-    delete pA;
+    A a;
+    B b;
+    a.play();
+    b.play();
     cout<<"hello"<<endl;
     return 0;
 }
