@@ -2,77 +2,124 @@
 
 using namespace std;
 
-class Fig
+
+class appliances
 {
 public:
-    Fig(string name_tmp):figname(name_tmp){
-        cout<<"Fig initial:"<<figname<<endl;
+    appliances(int temp_t = 25):temp(temp_t){
+        cout<<"initial appliance temp ="<<temp<<endl;
     }
-    virtual void ondraw() =0;
-    string figname;
+    virtual void changetemp() =0;
+    int temp;
 };
-class Point{
+class cooler:public appliances
+{
 public:
-   Point(int x_tmp = 0,int y_tmp =0):x(x_tmp),y(y_tmp){
-       cout<<"new point ("<<this->x<<","<<this->y<<")"<<endl;
-   }
-   ~Point(){
-       // cout<<"point delete"<<endl;
-   }
-   int x;
-   int y;
-};
-class Rectangle:public Fig{
-public:
-   Rectangle(Point& lt_tmp,Point& rb_tmp,string name_tmp):LTpoint(lt_tmp),RBpoint(rb_tmp),Fig(name_tmp){
-       cout<<"new rectangle initial:"<<figname<<endl;
-   }
-   ~Rectangle(){
-       cout<<"rectangle delete"<<endl;
-   }
-   void ondraw(){
-       int length = abs(this->LTpoint.x-this->RBpoint.x);
-       int high = abs(this->LTpoint.y-this->RBpoint.y);
-       cout<<"length ="<<length<<endl;
-       cout<<"high="<<high<<endl;
-   }
-   void set_LT(Point lt_tmp);
-   void set_RB(Point rb_tmp);
-   Point get_lt();
-   Point get_rb();
-   double area();
-private:
-   Point LTpoint;
-   Point RBpoint;
-};
-void Rectangle::set_LT(Point lt_tmp=(0,0)){
-   this->LTpoint = lt_tmp;
-}
-void Rectangle::set_RB(Point rb_tmp=(1,1)){
-   this->RBpoint = rb_tmp;
-}
-Point Rectangle::get_lt(){
-   Point tmp = this->LTpoint;
-   return tmp;
-}
-Point Rectangle::get_rb(){
-   Point tmp = this->RBpoint;
-   return tmp;
-}
-double Rectangle::area(){
-   int length = abs(this->LTpoint.x-this->RBpoint.x);
-   int high = abs(this->LTpoint.y-this->RBpoint.y);
-   double area = length* high;
-   return area;
-}
-int main(){
-   Point p1(1,1),p2(4,4);
-   Rectangle tom(p1,p2,"rectangle");
-   cout<<"area:"<<tom.area()<<endl;
-   tom.ondraw();
+    cooler(const int temp_t = 25):appliances(temp_t){}
+    void changetemp(){
+        this->temp--;
+       cout<<"cooler changetemp ="<<temp<<endl;
 
-   return 0;
+    }
+};
+class warmer : public appliances
+{
+public:
+    warmer(const int temp_t = 25):appliances(temp_t){}
+    void changetemp(){
+        this->temp++;
+       cout<<"warmer changetemp ="<<temp<<endl;
+
+    }
+};
+class Conditional:public cooler,public warmer
+{
+public:
+    Conditional(const int temp_t = 25):cooler(temp_t),warmer(temp_t){}
+    void tempup(){
+        warmer::changetemp();
+    }
+    void tempdown(){
+        cooler::changetemp();
+    }
+};
+int main(){
+    Conditional air(23);
+    air.tempup();
+    air.tempdown();
+    return  0;
 }
+//class Fig
+//{
+//public:
+//    Fig(string name_tmp):figname(name_tmp){
+//        cout<<"Fig initial:"<<figname<<endl;
+//    }
+//    virtual void ondraw() =0;
+//    string figname;
+//};
+//class Point{
+//public:
+//   Point(int x_tmp = 0,int y_tmp =0):x(x_tmp),y(y_tmp){
+//       cout<<"new point ("<<this->x<<","<<this->y<<")"<<endl;
+//   }
+//   ~Point(){
+//       // cout<<"point delete"<<endl;
+//   }
+//   int x;
+//   int y;
+//};
+//class Rectangle:public Fig{
+//public:
+//   Rectangle(Point& lt_tmp,Point& rb_tmp,string name_tmp):LTpoint(lt_tmp),RBpoint(rb_tmp),Fig(name_tmp){
+//       cout<<"new rectangle initial:"<<figname<<endl;
+//   }
+//   ~Rectangle(){
+//       cout<<"rectangle delete"<<endl;
+//   }
+//   void ondraw(){
+//       int length = abs(this->LTpoint.x-this->RBpoint.x);
+//       int high = abs(this->LTpoint.y-this->RBpoint.y);
+//       cout<<"length ="<<length<<endl;
+//       cout<<"high="<<high<<endl;
+//   }
+//   void set_LT(Point lt_tmp);
+//   void set_RB(Point rb_tmp);
+//   Point get_lt();
+//   Point get_rb();
+//   double area();
+//private:
+//   Point LTpoint;
+//   Point RBpoint;
+//};
+//void Rectangle::set_LT(Point lt_tmp=(0,0)){
+//   this->LTpoint = lt_tmp;
+//}
+//void Rectangle::set_RB(Point rb_tmp=(1,1)){
+//   this->RBpoint = rb_tmp;
+//}
+//Point Rectangle::get_lt(){
+//   Point tmp = this->LTpoint;
+//   return tmp;
+//}
+//Point Rectangle::get_rb(){
+//   Point tmp = this->RBpoint;
+//   return tmp;
+//}
+//double Rectangle::area(){
+//   int length = abs(this->LTpoint.x-this->RBpoint.x);
+//   int high = abs(this->LTpoint.y-this->RBpoint.y);
+//   double area = length* high;
+//   return area;
+//}
+//int main(){
+//   Point p1(1,1),p2(4,4);
+//   Rectangle tom(p1,p2,"rectangle");
+//   cout<<"area:"<<tom.area()<<endl;
+//   tom.ondraw();
+
+//   return 0;
+//}
 //class myfrection{
 //public:
 //    myfrection(const int a_tmp,const int b_tmp):a(a_tmp),b(b_tmp){
