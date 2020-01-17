@@ -2,40 +2,157 @@
 
 using namespace std;
 
-class A
+class Point
 {
 public:
-    A() {
-        cout<<"构造A"<<endl;
+    Point(const int x_tmp,const int y_tmp)
+        :x(x_tmp),y(y_tmp){
+
     }
-     void play(){
-        cout<<"A play"<<endl;
-    }
-    virtual ~A(){
-        cout<<"析构A"<<endl;
-    }
+    int x,y;
 };
-class B:public A
+class Fig{
+public:
+    Fig(){
+        cout<<"构建基本图形类"<<endl;
+    }
+    void ondraw()=0;
+};
+class triangle:public Fig
 {
 public:
-    B() {
-        cout<<"构造B"<<endl;
-    }
-     void play(){
-        cout<<"B::A play"<<endl;
-    }
-    ~B(){
-        cout<<"析构B"<<endl;
-    }
+    triangle(Point a_tmp,Point b_tmp,Point c_tmp)
+        : {}
+    Point a;
+    Point b;
+    Point c;
 };
-int main(){
-    A a;
-    B b;
-    a.play();
-    b.play();
-    cout<<"hello"<<endl;
-    return 0;
-}
+/*******************************************
+ *          A
+ *        B   C
+ *          D
+ */
+//class A{
+//public:
+//    A(const int a_tmp):a(a_tmp){
+//        cout<<"构造A"<<endl;
+//    }
+//    void fun(){
+//        cout<<"class A fun"<<endl;
+//    }
+//    int a;
+//};
+//class B:virtual public A
+//{
+//public:
+//    B(const int a_tmp,const int b_tmp):A(a_tmp),b(b_tmp){
+//        cout<<"构造B"<<endl;
+//    }
+//    ~B(){
+//        cout<<"析构B"<<endl;
+//    }
+//    int b;
+//};
+//class C:virtual public A
+//{
+//public:
+//    C(const int a_tmp,const int c_tmp):A(a_tmp),c(c_tmp){
+//        cout<<"构造C"<<endl;
+//    }
+//    ~C(){
+//        cout<<"析构C"<<endl;
+//    }
+//    int c;
+//};
+//class D:public B,public C
+//{
+//public:
+//    D(const int a_tmp,const int b_tmp,const int c_tmp,const int d_tmp)
+//        :A(a_tmp),B(a_tmp,b_tmp),C(a_tmp,c_tmp),d(d_tmp){
+//        cout<<"构造D"<<endl;
+//    }
+//    ~D(){
+//        cout<<"析构D"<<endl;
+//    }
+//    int d;
+//};
+//int main(){
+//    D dd(1,2,3,4);
+//    dd.fun();
+//}
+/******************************************
+ * V继承  A       B
+ *        *     *
+ *          * *
+ *           C
+*/
+//class A
+//{
+//public:
+//    A(const int a_tmp):a(a_tmp) {
+//        cout<<"构造A"<<endl;
+//    }
+//     void play(){
+//        cout<<"A play"<<endl;
+//    }
+//     void seta(const int a_tmp){
+//        this->a = a_tmp;
+//     }
+//     int geta()const{
+//        return this->a;
+//     }
+//     void print(){
+//        cout<<"A::a"<<this->a<<endl;
+//     }
+////    virtual ~A(){
+////        cout<<"析构A"<<endl;
+////    }
+//private:
+//     int a;
+//};
+//class B
+//{
+//public:
+//    B(const int b_tmp):b(b_tmp) {
+//        cout<<"构造B"<<endl;
+//    }
+//    void setb(const int b_tmp){
+//        this->b = b_tmp;
+//    }
+//    int geta()const{
+//        return this->b;
+//    }
+//    void play(){
+//        cout<<"B:play:"<<this->b<<endl;
+//    }
+////    virtual ~B(){
+////        cout<<"析构B"<<endl;
+////    }
+//private:
+//    int b;
+//};
+//class C:public A,public B
+//{
+//public:
+//    C(const int a_tmp,const int b_tmp,const int c_tmp)
+//        :A(a_tmp),B(b_tmp),c(c_tmp) {
+//        cout<<"构造C"<<endl;
+//    }
+//    void play(){
+//       cout<<"C:play"<<this->c<<endl;
+//    }
+//    ~C(){
+//        cout<<"析构C"<<endl;
+//    }
+//private:
+//    int c;
+//};
+//int main(){
+//    C c(1,2,3);
+//      c.play();
+//    cout<<"hello"<<endl;
+//    return 0;
+//}
 //class appliances
 //{
 //public:
