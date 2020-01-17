@@ -2,53 +2,78 @@
 
 using namespace std;
 
-
-class appliances
+class A
 {
 public:
-    appliances(int temp_t = 25):temp(temp_t){
-        cout<<"initial appliance temp ="<<temp<<endl;
+    A() {
+        cout<<"构造A"<<endl;
     }
-    virtual void changetemp() =0;
-    int temp;
-};
-class cooler:public appliances
-{
-public:
-    cooler(const int temp_t = 25):appliances(temp_t){}
-    void changetemp(){
-        this->temp--;
-       cout<<"cooler changetemp ="<<temp<<endl;
-
+    virtual ~A(){
+        cout<<"析构A"<<endl;
     }
 };
-class warmer : public appliances
+class B:public A
 {
 public:
-    warmer(const int temp_t = 25):appliances(temp_t){}
-    void changetemp(){
-        this->temp++;
-       cout<<"warmer changetemp ="<<temp<<endl;
-
+    B() {
+        cout<<"构造B"<<endl;
     }
-};
-class Conditional:public cooler,public warmer
-{
-public:
-    Conditional(const int temp_t = 25):cooler(temp_t),warmer(temp_t){}
-    void tempup(){
-        warmer::changetemp();
-    }
-    void tempdown(){
-        cooler::changetemp();
+    ~B(){
+        cout<<"析构B"<<endl;
     }
 };
 int main(){
-    Conditional air(23);
-    air.tempup();
-    air.tempdown();
-    return  0;
+    A*pA = new B;
+    delete pA;
+    cout<<"hello"<<endl;
+    return 0;
 }
+//class appliances
+//{
+//public:
+//    appliances(int temp_t = 25):temp(temp_t){
+//        cout<<"initial appliance temp ="<<temp<<endl;
+//    }
+//    virtual void changetemp() =0;
+//    int temp;
+//};
+//class cooler:public appliances
+//{
+//public:
+//    cooler(const int temp_t = 25):appliances(temp_t){}
+//    void changetemp(){
+//        this->temp--;
+//       cout<<"cooler changetemp ="<<temp<<endl;
+
+//    }
+//};
+//class warmer : public appliances
+//{
+//public:
+//    warmer(const int temp_t = 25):appliances(temp_t){}
+//    void changetemp(){
+//        this->temp++;
+//       cout<<"warmer changetemp ="<<temp<<endl;
+
+//    }
+//};
+//class Conditional:public cooler,public warmer
+//{
+//public:
+//    Conditional(const int temp_t = 25):cooler(temp_t),warmer(temp_t){}
+//    void tempup(){
+//        warmer::changetemp();
+//    }
+//    void tempdown(){
+//        cooler::changetemp();
+//    }
+//};
+//int main(){
+//    Conditional air(23);
+//    air.tempup();
+//    air.tempdown();
+//    return  0;
+//}
 //class Fig
 //{
 //public:
@@ -398,6 +423,12 @@ int main(){
 //    cout<<stu1.stu_get_score()<<endl;
 //    return 0;
 //}
+///*******************************************************************
+// *    父类:    公有成员       保护成员        私有成员
+// * 公有继承     类外访问       类内访问         父类接口访问
+// * 保护继承     类内访问       类内访问         父类接口访问
+// * 私有继承     类内访问        类内访问        父类接口访问
+// * /
 //class People{
 //public:
 //     string m_name;
