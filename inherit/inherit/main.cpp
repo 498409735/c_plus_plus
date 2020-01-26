@@ -1,32 +1,204 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-class Point
-{
-public:
-    Point(const int x_tmp,const int y_tmp)
-        :x(x_tmp),y(y_tmp){
+//class animall
+//{
+//public:
+//    animall(const string name_tmp)
+//        :name(name_tmp){
+//        cout<<"创建"<<this->name<<endl;
+//    }
+//    virtual void play() = 0;
+//    string name;
+//};
+//class elephant:public animall
+//{
+//public:
+//    elephant(const string name_tmp):animall(name_tmp){}
+//    void play(){
+//        cout<<this->name<<" play water spray!"<<endl;
+//    }
+//};
+//class lion:public animall
+//{
+//public:
+//    lion(const string name_tmp):animall(name_tmp){}
+//    void play(){
+//        cout<<this->name<<" play jump fire ring!"<<endl;
+//    }
+//};
+//class dolphin:public animall
+//{
+//public:
+//    dolphin(const string name_tmp):animall(name_tmp){}
+//    void play(){
+//        cout<<this->name<<" play swimming!"<<endl;
+//    }
+//};
+//class trainer{
+//public:
+//    trainer(const string name_tmp)
+//        :name(name_tmp),len(0){
+//        cout<<"创建驯兽员"<<this->name<<endl;
+//    }
+//    void add_animal(animall* an){
+//        this->str.push_back(an);
+//        this->len++;
+//        cout<<"添加"<<an->name<<endl;
+//        cout<<"当前"<<this->len<<"只动物"<<endl;
+//    }
+//    void delete_animal(){
+//        it = str.end()-1;
+//        cout<<(*it)->name<<"删除"<<endl;
+//        this->str.pop_back();
+//        this->len--;
+//        cout<<"当前"<<this->len<<"只动物"<<endl;
+//    }
+//    void play_all(){
+//       for(it=str.begin();it!=str.end();it++){
+//           (*it)->play();
+//       }
+//    }
+//    string name;
+//    int len;
+//    vector<animall*> str;
+//     vector<animall*> ::iterator it;
+//};
+//int main(){
+//    lion lion("lion");
+//    dolphin dolphin("dolphin");
+//    elephant elephant("elephant");
+//    trainer jack("jack");
+//    jack.add_animal(&lion);
+//    jack.add_animal(&dolphin);
+//    jack.add_animal(&elephant);
+//    jack.play_all();
+//    jack.delete_animal();
+//}
 
-    }
-    int x,y;
-};
-class Fig{
-public:
-    Fig(){
-        cout<<"构建基本图形类"<<endl;
-    }
-    void ondraw()=0;
-};
-class triangle:public Fig
-{
-public:
-    triangle(Point a_tmp,Point b_tmp,Point c_tmp)
-        : {}
-    Point a;
-    Point b;
-    Point c;
-};
+//class Stu
+//{
+//public:
+//    Stu(const string name_tmp)
+//        :name(name_tmp){
+//        cout<<"创建一个学生:"<<this->name<<endl;
+//    }
+//    void examination(){
+//        cout<<"let's have test"<<endl;
+//    }
+//    string name;
+//};
+//class stu_h :public Stu{
+//public:
+//    stu_h(string name_tmp)
+//        :Stu(name_tmp){
+//            cout<<"创建考神"<<endl;
+//    }
+//};
+//class stu_l:public Stu
+//{
+//public:
+//    stu_l(string name_tmp)
+//        :Stu(name_tmp){
+//        cout<<"创建渣渣"<<endl;
+//    }
+//    void examination(const stu_h name_tmp){
+//        cout<<name_tmp.name<<"开始替"<<this->name<<"考试"<<endl;
+//    }
+//};
+//int main(){
+//    stu_h jack("jack");
+//    stu_l rose("rose");
+//    rose.examination(jack);
+//}
+//template <typename T>
+//class Myarry{
+//private:
+//    T data[20];
+//    int len;
+//public:
+//    Myarry();
+//    T indexof(const int index);
+//    void addvalue(const T value);
+//};
+//template <typename T>
+//Myarry<T>::Myarry():len(0){
+//    cout<<"array initila"<<endl;
+//}
+//template <typename T>
+//T Myarry<T>::indexof(const int index){
+//    return data[index];
+//}
+//template <typename T>
+//void Myarry<T>::addvalue(const T value){
+//    data[len] = value;
+//    len++;
+//}
+//int main(){
+//    Myarry<double> jack;
+//    for(int i=0;i<10;i++){
+//        jack.addvalue(i+0.12f);
+//        cout<<"index i ="<<jack.indexof(i)<<endl;
+//    }
+//    return  0;
+//}
+
+//class Point
+//{
+//public:
+//    Point(const int x_tmp,const int y_tmp)
+//        :x(x_tmp),y(y_tmp){
+
+//    }
+//    int x,y;
+//};
+//class Fig{
+//public:
+//    Fig(){
+//        cout<<"构建基本图形类"<<endl;
+//    }
+//    virtual void ondraw()=0;
+//};
+//class triangle:public Fig
+//{
+//public:
+//    triangle(Point a_tmp,Point b_tmp,Point c_tmp)//三个点坐标,暂不考虑三点共线问题
+//        :a(a_tmp),b(b_tmp),c(c_tmp) {
+//        cout<<"triangle initial:"<<endl;
+//    }
+//    void ondraw() override{
+//        cout<<"this is a triangle"<<endl;
+//        cout<<"point a.x="<<this->a.x<<"a.y="<<this->a.y<<endl;
+//        cout<<"point b.x="<<this->b.x<<"b.y="<<this->b.y<<endl;
+//        cout<<"point c.x="<<this->c.x<<"c.y="<<this->c.y<<endl;
+//    }
+//    Point a;
+//    Point b;
+//    Point c;
+//};
+//class round:public Fig
+//{
+//public:
+//    round(Point a_tmp,const int radiu_tmp = 1)//圆心,半径
+//        :a(a_tmp),radiu(radiu_tmp) {
+//        cout<<"triangle initial:"<<endl;
+//    }
+//    void ondraw() override{
+//        cout<<"this is a round"<<endl;
+//        cout<<"point a.x="<<this->a.x<<"a.y="<<this->a.y<<endl;
+//        cout<<"randiu ="<<this->radiu<<endl;
+//    }
+//    Point a;
+//    int radiu;
+//};
+//int main(){
+//    triangle jack(Point(1,1),Point(2,3),Point(3,4));
+//    round rose(Point(1,1),2);
+//    jack.ondraw();
+//    rose.ondraw();
+//}
 /*******************************************
  *          A
  *        B   C
