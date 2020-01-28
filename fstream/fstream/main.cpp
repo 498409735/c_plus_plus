@@ -4,6 +4,195 @@
 #include <vector>
 using namespace std;
 
+/*****************************************************************
+ *自定义vector类
+ */
+//template<typename T>
+//class myvector{
+//public:
+//    myvector(const int len_tmp = 1,const T num_tmp = 0)
+//        :len(len_tmp),num(num_tmp){
+//        if(len>0){
+//            str = new T[len];
+//            for(int i=0;i<len;i++){
+//                str[i] = num;
+//            }
+//        }else {
+//            cerr<<"lenth is less 0"<<endl;
+//            return;
+//        }
+//    }
+//    void push(T num_tmp){
+//        T* newstr = new T[this->len+1];     //长度增加,故在堆申请新空间代替原空间
+//        for(int i=0;i<this->len;i++){       //旧空间数据赋值给新空间
+//            newstr[i] = str[i];
+//        }
+//        newstr[this->len] = num_tmp;        //新值添加,长度加1,释放旧空间,替换
+//        this->len++;
+//        delete []str;
+//        str = newstr;
+//    }
+//    T pop(){
+//        T tmp;
+//        tmp = str[this->len-1];
+//        this->len--;
+//        return tmp;
+//    }
+//    T& operator[](const int i){
+//        return str[i];
+//    }
+//    void show(){
+//        for(int i=0;i<this->len;i++){
+//            cout<<str[i]<<" "<<flush;
+//        }
+//        cout<<endl;
+//    }
+//    ~myvector(){
+//        delete []str;
+//    }
+//    int len;
+//    T num;
+//    T* str;
+//};
+//int main(){
+//    cout<<"创建int 数组"<<endl;
+//    myvector<int> in(5,66);
+//    in.show();
+//    in.push(77);
+//    in.show();
+//    cout<<"取出一个数值:"<<in.pop()<<endl;
+//    in.show();
+//    cout<<endl;
+
+//    cout<<"创建double 数组"<<endl;
+//    myvector<double> doub(5,1.23f);
+//    doub.show();
+//    doub.push(2.44f);
+//    doub.show();
+//    cout<<"取出一个数值:"<<doub.pop()<<endl;
+//    doub.show();
+//    cout<<endl;
+
+//    cout<<"创建char 数组"<<endl;
+//    myvector<char> ch(5,'x');
+//    ch.show();
+//    ch.push('y');
+//    ch.show();
+//    cout<<"取出一个数值:"<<ch.pop()<<endl;
+//    ch.show();
+//    cout<<endl;
+
+//    cout<<"创建string 数组"<<endl;
+//    myvector<string> str(5,"hello");
+//    str.show();
+//    str.push("world");
+//    str.show();
+//    cout<<"取出一个数值:"<<str.pop()<<endl;
+//    str.show();
+//    cout<<endl;
+
+//}
+/*****************************************************************
+ *
+ */
+//class operation{
+//protected:
+//    double a;
+//    double b;
+//public:
+//    void set_a(){
+//        double a_tmp;
+//        cout<<"请输入一个浮点数"<<endl;
+//        cin>>a_tmp;
+//        this->a = a_tmp;
+//        cout<<"您输入的数字为:"<<this->a<<endl;
+//    }
+//    void set_b( ){
+//        double b_tmp;
+//        cout<<"请输入另一个浮点数"<<endl;
+//        cin>>b_tmp;
+//        this->b = b_tmp;
+//        cout<<"您输入的数字为:"<<this->b<<endl;
+//    }
+////    virtual void getresult();
+//};
+//class add:public operation{
+//public:
+//    double getresult()const{
+//        return this->a+this->b;
+//    }
+//};
+//class minu:public operation{
+//public:
+//    double getresult()const{
+//        return this->a-this->b;
+//    }
+//};
+//class mutiply:public operation{
+//public:
+//    double getresult()const{
+//        return this->a*this->b;
+//    }
+//};
+//class divise:public operation{
+//public:
+//    double getresult()const{
+//        if(this->b==0){
+//            cout<<"divise number error"<<endl;
+//            return 0;
+//        }
+//        return this->a/this->b;
+//    }
+//};
+
+//int main(){
+//    char ch;
+
+//    cout<<"请输入运算符"<<endl;
+//    cin>>ch;
+
+//    switch (ch) {
+//    case '+':
+//        {
+//            add jack;
+//            jack.set_a();
+//            jack.set_b();
+//            cout<<"结果为:"<<jack.getresult()<<endl;
+//            break;
+//        }
+
+//    case '-':
+//    {
+//        minu jack;
+//        jack.set_a();
+//        jack.set_b();
+//        cout<<"结果为:"<<jack.getresult()<<endl;
+//        break;
+//    }
+//        break;
+//    case '*':
+//    {
+//        mutiply jack;
+//        jack.set_a();
+//        jack.set_b();
+//        cout<<"结果为:"<<jack.getresult()<<endl;
+//        break;
+//    }
+//        break;
+//    case '/':
+//    {
+//        divise jack;
+//        jack.set_a();
+//        jack.set_b();
+//        cout<<"结果为:"<<jack.getresult()<<endl;
+//        break;
+//    }
+//        break;
+//    default:
+//        break;
+//    }
+//}
+
 //class Role
 //{
 //public:
@@ -111,14 +300,14 @@ using namespace std;
 //    }
 //}
 //int main(){
-//    vector <int> a(10,77);
-//    vector<int> ::iterator iter;
+//    vector <string> a(10,"ab");
+//    vector<string> ::iterator iter;
 //    for(iter=a.begin();iter<a.end();iter++){
 //        cout<<*iter<<" ";
 //    }
 //    cout<<endl;
 //    iter = a.begin();
-//    a.insert(iter+2,66);
+//    a.insert(iter+2,"cd");
 //    for(iter=a.begin();iter<a.end();iter++){
 //        cout<<*iter<<" ";
 //    }
