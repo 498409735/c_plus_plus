@@ -4,6 +4,94 @@
 #include <vector>
 using namespace std;
 
+template <typename T>
+void sort(T*str,const int len){
+    T tmp;
+    for(int i=0;i<len-1;i++){
+        for(int j=0;j<len-1;j++){
+            if(*(str+j)>*(str+j+1)){
+                tmp         = *(str+j);
+                *(str+j)    = *(str+j+1);
+                *(str+j+1)  = tmp;
+            }
+        }
+    }
+}
+int main(){
+    int i ;
+    cout<<"test for int:"<<endl;
+    int a[10] = {9,8,7,6,5,4,3,2,1,0};
+    for( i =0;i<10;i++){
+        cout<<*(a+i)<<" "<<flush;
+    }
+    cout<<endl;
+    sort(a,10);
+    for( i =0;i<10;i++){
+        cout<<*(a+i)<<" "<<flush;
+    }
+    cout<<endl;
+    cout<<"test for double:"<<endl;
+    double dou[10] = {0.9f,8.3f,0.7f,6.2f,5.1f,0.4f,0.3f,2.1f,1.2f,0.1f};
+    for( i =0;i<10;i++){
+        cout<<*(dou+i)<<" "<<flush;
+    }
+    cout<<endl;
+    sort(dou,10);
+    for( i =0;i<10;i++){
+        cout<<*(dou+i)<<" "<<flush;
+    }
+    cout<<endl;
+    cout<<"test for string:"<<endl;
+    string st[10] = {"hello","world","abc","bdc","cdb","follow","me","ellen","identify","stri"};
+    for( i =0;i<10;i++){
+        cout<<*(st+i)<<" "<<flush;
+    }
+    cout<<endl;
+    sort(st,10);
+    for( i =0;i<10;i++){
+        cout<<*(st+i)<<" "<<flush;
+    }
+    cout<<endl;
+}
+//class Employee{
+//public:
+//    Employee(const string name_tmp,const int id_tmp)
+//        :name(name_tmp),ID(id_tmp){}
+//    string name;
+//    int ID;
+//    virtual void pay() =0;
+//};
+
+//class  Technician:public Employee{
+//public:
+//    Technician(const string name_tmp,const int id_tmp)
+//        :Employee(name_tmp,id_tmp){
+//        cout<<"创建技术员:"<<this->name<<"\t"<<this->ID<<endl;
+//    }
+//    void pay() override{
+//        cout<<"每次发1万"<<endl;
+//    }
+//};
+//class SalesMan:public Employee{
+//public:
+//    SalesMan(const string name_tmp,const int id_tmp)
+//        :Employee(name_tmp,id_tmp){
+//        cout<<"创建销售员:"<<this->name<<"\t"<<this->ID<<endl;
+//    }
+//    void pay() override{
+//        cout<<"每次发10万"<<endl;
+//    }
+//};
+//void getSalary(Employee* em){//调用派生类对象采用父类传参更安全有效
+//    em->pay();
+//}
+//int main(){
+//    Technician jack("jack",190801);
+//    SalesMan rose("rose",1909);
+//    getSalary(&jack);
+//    getSalary(&rose);
+//    return 0;
+//}
 /*****************************************************************
  *自定义vector类
  */
