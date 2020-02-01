@@ -2,57 +2,457 @@
 #include <fstream>
 #include <string.h>
 #include <vector>
+#include <algorithm>
+#include <iomanip>
 using namespace std;
 
-template <typename T>
-void sort(T*str,const int len){
-    T tmp;
-    for(int i=0;i<len-1;i++){
-        for(int j=0;j<len-1;j++){
-            if(*(str+j)>*(str+j+1)){
-                tmp         = *(str+j);
-                *(str+j)    = *(str+j+1);
-                *(str+j+1)  = tmp;
-            }
+
+//class Car{
+//private:
+//    string brand;
+//    double price;
+//public:
+//    Car(const string brand_tmp = "benz",const double price_tmp=3.3)
+//        :brand(brand_tmp),price(price_tmp){
+//        cout<<"new car:"<<this->brand<<" "<<this->price<<endl;
+//    }
+//    void running(){
+//        cout<<"my car "<<this->brand<<" "<<this->price<<"running"<<endl;
+//    }
+//    double get_price()const{
+//        return this->price;
+//    }
+//};
+//bool car_compare(const Car& c1,const Car& c2){
+//    return c1.get_price()>c2.get_price();
+//}
+//int main(void){
+//    vector<Car> str;
+//    vector<Car>::iterator point;
+//    str.push_back(Car("zs",1.1));
+//    str.push_back(Car("ls",2.2));
+//    str.push_back(Car("ws",3.3));
+//    str.push_back(Car("zl",4.4));
+//    cout<<"unsort"<<endl;
+//    for(point=str.begin();point!=str.end();point++){
+//        (*point).running();
+//    }
+//    cout<<endl;
+//    sort(str.begin(),str.end(),car_compare);
+//    cout<<"sort"<<endl;
+//    for(point=str.begin();point!=str.end();point++){
+//        (*point).running();
+//    }
+//    cout<<endl;
+//}
+/*********************************************************************
+ *无参构造函数,默认参数构造函数
+ */
+//class Date
+//{
+//public:
+//    Date () {
+//        year = 2010;
+//        month = 6;
+//        day = 17;
+//    }
+//    Date(const int year_tmp= 2010,const int month_tmp=6,const int day_tmp=17)//不能默认参数
+//        :year(year_tmp),month(month_tmp),day(day_tmp){
+
+//    }
+//    void display(){
+//        cout<<"taday:"<<this->year<<"/"<<this->month<<"/"<<this->day<<endl;
+//    }
+//    friend ostream& operator<<(ostream& out,Date& other);
+//    int year;
+//    int month;
+//    int day;
+//};
+//ostream& operator<<(ostream& out,Date& other){
+//        out<<other.year<<"/"<<other.month<<"/"<<other.day<<endl;
+//        return  out;
+//}
+//int main(){
+//    Date d1;
+//    d1.display();
+//    Date d2(2020,1,20);
+//    d2.display();
+//    cout<<d1<<d2;
+//}
+/*****************************************************************
+ *自定义 string 类
+ */
+class mystring{
+public:
+    /***************原始构造,可不带参数**************************/
+    mystring(const char* pdata_tmp = NULL){
+        if(pdata_tmp==NULL){
+            this->pdata = new char[1]();
+            cout<<"empty mystring initial"<<endl;
+        }else {
+            this->pdata = new char[strlen(pdata_tmp)+1];
+            strcpy(this->pdata,pdata_tmp);
+            cout<<"mystring initial:"<<this->pdata<<endl;
         }
     }
+    /**************复制构造,复制并生成与另一个mystring 对象相同的对象***********/
+    mystring(const mystring& other){
+        // if(strcmp(this->pdata,other.pdata)==0)return;
+        this->pdata = new char[strlen(other.pdata)+1];
+        strcpy(this->pdata,other.pdata);
+        cout<<"copy mystring initial:"<<this->pdata<<endl;
+    }
+    /*************'='重载,字符串直接赋值****************************************/
+    mystring& operator=(const char* pdata_tmp){
+        delete []this->pdata;
+        this->pdata = new char[strlen(pdata_tmp)+1];
+        strcpy(this->pdata,pdata_tmp);
+        cout<<"operator'='reload,char* to mystring:"<<this->pdata<<endl;
+        return *this;
+    }
+    /**************'='重载,其他mystring对象赋值给当前string对象*********************************/
+    mystring& operator=(const mystring& other){
+        delete []this->pdata;
+        this->pdata = new char[strlen(other.pdata)+1];
+        strcpy(this->pdata,other.pdata);
+        cout<<"operator'='reload,string to string:"<<this->pdata<<endl;
+        return *this;
+    }
+    /**************'+'重载,两个string相加**********************************************/
+    mystring operator+(const mystring &other){
+        mystring tmp;
+        delete [] tmp.pdata;
+        tmp.pdata = new char[strlen(this->pdata)+strlen(other.pdata)+1];
+        strcpy(tmp.pdata,this->pdata);
+        strcat(tmp.pdata,other.pdata);
+        return tmp;
+    }
+    char&operator[](const unsigned int i){
+        if(i<strlen(this->pdata))return this->pdata[i];
+        else {
+            cerr<<"argument is over size or less than zero"<<endl;;
+            return this->pdata[0];
+        }
+    }
+    mystring& operator+=(mystring& other){
+        char*tmp = new char[strlen(this->pdata)+strlen(other.pdata)+1]();
+        strcpy(tmp,this->pdata);
+        strcat(tmp,other.pdata);
+        delete []this->pdata;
+        this->pdata = tmp;
+        return *this;
+    }
+    friend ostream& operator<<(ostream& out,mystring&other);
+    friend istream& operator>>(istream& in,mystring&other);
+    ~mystring(){
+        delete [] pdata;
+    }
+    char* pdata;
+};
+ostream& operator<<( ostream& out,mystring&other){
+    // if(other.pdata==NULL)return out;
+    out<<other.pdata<<endl;
+    return out;
 }
-int main(){
-    int i ;
-    cout<<"test for int:"<<endl;
-    int a[10] = {9,8,7,6,5,4,3,2,1,0};
-    for( i =0;i<10;i++){
-        cout<<*(a+i)<<" "<<flush;
-    }
-    cout<<endl;
-    sort(a,10);
-    for( i =0;i<10;i++){
-        cout<<*(a+i)<<" "<<flush;
-    }
-    cout<<endl;
-    cout<<"test for double:"<<endl;
-    double dou[10] = {0.9f,8.3f,0.7f,6.2f,5.1f,0.4f,0.3f,2.1f,1.2f,0.1f};
-    for( i =0;i<10;i++){
-        cout<<*(dou+i)<<" "<<flush;
-    }
-    cout<<endl;
-    sort(dou,10);
-    for( i =0;i<10;i++){
-        cout<<*(dou+i)<<" "<<flush;
-    }
-    cout<<endl;
-    cout<<"test for string:"<<endl;
-    string st[10] = {"hello","world","abc","bdc","cdb","follow","me","ellen","identify","stri"};
-    for( i =0;i<10;i++){
-        cout<<*(st+i)<<" "<<flush;
-    }
-    cout<<endl;
-    sort(st,10);
-    for( i =0;i<10;i++){
-        cout<<*(st+i)<<" "<<flush;
-    }
-    cout<<endl;
+istream& operator>>(istream& in,mystring&other){
+    delete []other.pdata;
+    other.pdata = new char[1024];
+    in>>other.pdata;
+    return in;
 }
+int main()
+{
+    cout<<"nomal initial-----------------"<<endl;
+    mystring rose("hellow");
+    cout<<rose;
+    cout<<"------------------------------"<<endl;
+    cout<<"copy initial------"<<endl;
+    mystring jack=rose;
+    cout<<jack;
+    cout<<"------------------------------"<<endl;
+    mystring zs;
+    cout<<"operator = reload------"<<endl;
+    zs = rose;
+    zs ="hhhhhh";
+    cout<<"------------------------------"<<endl;
+    cout<<"operator + reload-------"<<endl;
+    mystring zzl;
+    zzl = jack+rose;
+    cout<<zzl;
+    cout<<"------------------------------"<<endl;
+    zs = zs+rose+"hello world!!!"+jack;
+    cout<<zs;
+    cout<<"------------------------------"<<endl;
+    cout<<"operator []reload"<<endl;
+    cout<<zs[-1];
+    cout<<"------------------------------"<<endl;
+    cout<<"operator +=reload-------------"<<endl;
+    zs+=jack;
+    cout<<zs;
+    cout<<"------------------------------"<<endl;
+//    cin>>zs;
+//    cout<<zs;
+    return 0;
+}
+
+//template<typename T>
+//int seqsearch(const T* list,int len,T key){
+//    int i;
+//    for(i =0;i<len;i++){
+//        if(key==*(list+i))break;
+//    }
+//    if(i==len)return -1;
+//    else return i;
+//}
+//int main()
+//{
+//    int i;
+//    int inte[]={1,2,3,4,5,6};
+//    double dou[]={1.1,2.2,3.3,4.4,5.5,6.6f};
+//    char carac[]={'a','b','c','d','e','f'};
+//    cout<<"原始数列:"<<flush;
+//    for(i=0;i<(int)(sizeof(inte)/sizeof(int));i++){
+//        cout<<inte[i]<<" "<<flush;
+//    }
+//    cout<<endl;
+//    cout<<"查找key=5,预期返回值:4,实际返回值:"<<seqsearch(inte,(int)(sizeof(inte)/sizeof(int)),5)<<endl;
+//    cout<<endl;
+//    cout<<"原始数列:"<<flush;
+//    for(i=0;i<(int)(sizeof(dou)/sizeof(double));i++){
+//        cout<<dou[i]<<" "<<flush;
+//    }
+//    cout<<endl;
+//    cout<<"查找key=2.2,预期返回值:1,实际返回值:"<<seqsearch(dou,(int)(sizeof(dou)/sizeof(double)),2.2)<<endl;
+//    cout<<endl;
+//    cout<<"原始数列:"<<flush;
+//    for(i=0;i<(int)(sizeof(carac)/sizeof(char));i++){
+//        cout<<carac[i]<<" "<<flush;
+//    }
+//    cout<<endl;
+//    cout<<"查找key='f',预期返回值:f,实际返回值:"<<seqsearch(carac,(int)(sizeof(carac)/sizeof(char)),'f')<<endl;
+//    cout<<endl;
+//    return 0;
+//}
+
+
+//int main(){
+//    int i;
+//    vector<int> str;
+//    vector<int>::iterator point;
+//    for(i=0;i<10;i++){
+//        str.push_back(rand()%100);//数据随机生成
+//    }
+//    cout<<std::left<<setw(10)<<"old:  "<<flush;
+//    for(point=str.begin();point!=str.end();point++){
+//        cout<<(*point)<<" "<<flush;
+//    }
+//    cout<<endl;
+//    point = str.begin()+3;
+//    str.insert(point,66);
+//    cout<<std::left<<setw(10)<<"insert:"<<flush;
+//    for(point=str.begin();point!=str.end();point++){
+//        cout<<(*point)<<" "<<flush;
+//    }
+//    cout<<endl;
+
+//    point = str.begin()+5;
+//    str.erase(point);
+//    cout<<std::left<<setw(10)<<"erase:"<<flush;
+//    for(point=str.begin();point!=str.end();point++){
+//        cout<<(*point)<<" "<<flush;
+//    }
+//    cout<<endl;
+//}
+//template <typename T>
+//T* InsertOrder(T* str, int* len, T elem){
+//    int i,j,tmp;
+//    T* str_tmp = new T[(*len)+1];
+//    for(i=0;i<*len;i++){
+//        if(elem<str[i])break;   //新数值插入到第i-1个位置
+//    }
+//    if(i!=(*len)){
+//        tmp = i;
+//        for(j=0;j<tmp;j++){
+//            str_tmp[j] = str[j];
+//        }
+//        str_tmp[tmp] = elem;     //新数值插入到第i-1个位置
+//        for(j=tmp;j<(*len);j++){
+//            str_tmp[j+1] = str[j];
+//        }
+//    }else{
+//        for(j=0;j<(*len);j++){
+//            str_tmp[j] = str[j];
+//        }
+//        str_tmp[(*len)] = elem;   //新数值插入到末尾
+//    }
+//    delete []str;
+//    (*len)++;
+//    return str_tmp;
+//}
+//template <typename T>
+//void sort(T*str,const int len){
+//    T tmp;
+//    for(int i=0;i<len-1;i++){
+//        for(int j=0;j<len-1;j++){
+//            if(*(str+j)>*(str+j+1)){
+//                tmp         = *(str+j);
+//                *(str+j)    = *(str+j+1);
+//                *(str+j+1)  = tmp;
+//            }
+//        }
+//    }
+//}
+//int main(){
+//    int i;
+//    int len =10;
+//    int* str = new int[len];
+//    for(i=0;i<10;i++){
+//        str[i] =rand()%100;//数据随机生成
+//    }
+//     cout<<"原始数列:"<<flush;
+//    for(i=0;i<len;i++){
+//        cout<<str[i]<<" "<<flush;
+//    }
+//    cout<<endl;
+
+//    sort(str,len);
+//    cout<<"排序后:  "<<flush;
+//    for(i=0;i<len;i++){
+//        cout<<str[i]<<" "<<flush;
+//    }
+//    cout<<endl;
+
+//    str = InsertOrder(str,&len,66);
+//    cout<<"插入后  :"<<flush;
+//   for(i=0;i<len;i++){
+//       cout<<str[i]<<" "<<flush;
+//   }
+//   cout<<endl;
+//   str = InsertOrder(str,&len,99);
+//   cout<<"插入后  :"<<flush;
+//  for(i=0;i<len;i++){
+//      cout<<str[i]<<" "<<flush;
+//  }
+//  cout<<endl;
+//}
+//bool mycompare(const int& a1,const int& a2){
+//    return a1>a2;       //重写比较函数
+//}
+//int main(){
+//    int i;
+//    vector<int> str;
+//    for(i=0;i<10;i++){
+//        str.push_back(rand()%100);//数据随机生成
+//    }
+//    cout<<"原始数列:"<<flush;
+//    for(i=0;i<10;i++){
+//        cout<<str[i]<<" "<<flush;
+//    }
+//    cout<<endl;
+//    sort(str.begin(),str.end(),mycompare);
+//    cout<<"排序后:  "<<flush;
+//    for(i=0;i<10;i++){
+//        cout<<str[i]<<" "<<flush;
+//    }
+//    cout<<endl;
+//}
+//class Stu
+//{
+//public:
+//    Stu(const string name_tmp,const int id_tmp,const float score_tmp)
+//    :name(name_tmp),id(id_tmp),score(score_tmp){
+//        cout<<"new student added name:"<<this->name<<" "<<this->id<<" "<<this->score<<endl;
+//    }
+//    friend void set_score_class(const float score_tmp);
+//    string name;
+//    int id;
+//    float score;
+//};
+//void set_score_class(const float score_tmp){
+//    string class_flag;
+//    class_flag = (score_tmp>=90)?"优":((score_tmp>=80)?"良":((score_tmp>=70)?"中":((score_tmp>=60)?"及格":"不及格")));
+//    cout<<"成绩为:"<<class_flag<<endl;
+//}
+//int main(){
+//    string name_in;
+//    int id_in=190800;
+//    float score_in;
+//    vector<Stu*> str;
+//    vector<Stu*>::iterator it;
+//    char ch;
+//    for(;;){
+//        cout<<"添加学生请按1,退出请按其它"<<endl;
+//        cin>>ch;
+//        if(ch=='1'){
+//            cout<<"输入学生姓名,分数,用空格隔开"<<endl;
+//            cin>>name_in>>score_in;
+//            Stu* stu_tmp = new Stu(name_in,id_in+1,score_in);
+//            str.push_back(stu_tmp);
+//        }else break;
+//    }
+//    float total =0;
+//    for(it=str.begin();it!=str.end();it++){
+//        cout<<" "<<(*it)->name<<" "<<flush;
+//        set_score_class((*it)->score);
+//        total += (*it)->score;
+//    }
+//    cout<<"total ="<<total<<endl;
+//    for(it=str.begin();it!=str.end();it++){
+//          delete (*it);
+//    }
+//}
+//template <typename T>
+//void sort(T*str,const int len){
+//    T tmp;
+//    for(int i=0;i<len-1;i++){
+//        for(int j=0;j<len-1;j++){
+//            if(*(str+j)>*(str+j+1)){
+//                tmp         = *(str+j);
+//                *(str+j)    = *(str+j+1);
+//                *(str+j+1)  = tmp;
+//            }
+//        }
+//    }
+//}
+//int main(){
+//    int i ;
+//    cout<<"test for int:"<<endl;
+//    int a[10] = {9,8,7,6,5,4,3,2,1,0};
+//    for( i =0;i<10;i++){
+//        cout<<*(a+i)<<" "<<flush;
+//    }
+//    cout<<endl;
+//    sort(a,10);
+//    for( i =0;i<10;i++){
+//        cout<<*(a+i)<<" "<<flush;
+//    }
+//    cout<<endl;
+//    cout<<"test for double:"<<endl;
+//    double dou[10] = {0.9f,8.3f,0.7f,6.2f,5.1f,0.4f,0.3f,2.1f,1.2f,0.1f};
+//    for( i =0;i<10;i++){
+//        cout<<*(dou+i)<<" "<<flush;
+//    }
+//    cout<<endl;
+//    sort(dou,10);
+//    for( i =0;i<10;i++){
+//        cout<<*(dou+i)<<" "<<flush;
+//    }
+//    cout<<endl;
+//    cout<<"test for string:"<<endl;
+//    string st[10] = {"hello","world","abc","bdc","cdb","follow","me","ellen","identify","stri"};
+//    for( i =0;i<10;i++){
+//        cout<<*(st+i)<<" "<<flush;
+//    }
+//    cout<<endl;
+//    sort(st,10);
+//    for( i =0;i<10;i++){
+//        cout<<*(st+i)<<" "<<flush;
+//    }
+//    cout<<endl;
+//}
+/*********************************************************************
+ *
+ */
 //class Employee{
 //public:
 //    Employee(const string name_tmp,const int id_tmp)
@@ -110,6 +510,48 @@ int main(){
 //            return;
 //        }
 //    }
+//    void insert(const int point,const T elem){
+//        if(point>(this->len-1))return;
+//        int i;
+//        T* str_new = new T[this->len+1];
+//        for(i=0;i<point;i++){
+//            str_new[i] = str[i];
+//        }
+//        str_new[point] = elem;
+//        for(i=point;i<this->len;i++){
+//            str_new[i+1] = str[i];
+//        }
+//        this->len++;
+//        delete [] str;
+//        str = str_new;
+
+//    }
+//    void erease(const int point){
+//        if(point>(this->len-1))return;
+
+//        int i;
+//        T* str_new = new T[this->len-1];
+//        for(i=0;i<point;i++){
+//            str_new[i] = str[i];
+//        }
+//        for(i=point;i<this->len-1;i++){
+//            str_new[i] = str[i+1];
+//        }
+//        this->len--;
+//        delete [] str;
+//        str = str_new;
+//    }
+//    void revise(const int point,const T elem){
+//        str[point] = elem;
+//    }
+//    int serch(const T elem){
+//        int i;
+//        for(i=0;i<this->len;i++){
+//            if(str[i]==elem)break;
+//        }
+//        if(i==this->len)return -1;
+//        else return i;
+//    }
 //    void push(T num_tmp){
 //        T* newstr = new T[this->len+1];     //长度增加,故在堆申请新空间代替原空间
 //        for(int i=0;i<this->len;i++){       //旧空间数据赋值给新空间
@@ -146,10 +588,15 @@ int main(){
 //    cout<<"创建int 数组"<<endl;
 //    myvector<int> in(5,66);
 //    in.show();
-//    in.push(77);
+//    in.insert(2,77);
 //    in.show();
-//    cout<<"取出一个数值:"<<in.pop()<<endl;
+//    in.insert(5,77);
 //    in.show();
+//    in.erease(5);
+//    in.show();
+//    in.revise(2,44);
+//    in.show();
+//    cout<<in.serch(44)<<endl;
 //    cout<<endl;
 
 //    cout<<"创建double 数组"<<endl;
@@ -175,6 +622,13 @@ int main(){
 //    str.show();
 //    str.push("world");
 //    str.show();
+//    str.insert(3,"hhh");
+//    str.show();
+//    str.erease(5);
+//    str.show();
+//    str.revise(2,"xxx");
+//    str.show();
+//    cout<<str.serch("xxx")<<endl;
 //    cout<<"取出一个数值:"<<str.pop()<<endl;
 //    str.show();
 //    cout<<endl;
