@@ -4,8 +4,325 @@
 #include <vector>
 #include <algorithm>
 #include <iomanip>
+#include <exception>
+
 using namespace std;
 
+class car{
+public:
+    car(const string b,const double p):brance(b),price(p){
+
+    }
+    void running(){
+        cout<<this->brance<<" class running"<<endl;
+    }
+//    bool operator<(const car&other){
+//        return this->price<other.price;
+//    }
+    string getname()const  {
+        return this->brance;
+    }
+    double getprice()const{
+        return this->price;
+    }
+    friend bool pricecompare(const car&a,const car&b);
+private:
+    string brance;
+    double price;
+};
+void show(vector<car> a){
+    vector<car>::iterator it;
+    for(it=a.begin();it<a.end();it++){
+        cout<<std::left<<setw(10)<<(*it).getname()<<"\t"<<(*it).getprice()<<endl;
+    }
+    cout<<endl;
+}
+bool pricecompare(const car&a,const car&b){
+    return a.price<b.price;
+}
+int main()
+{
+    vector<car> str;
+    str.push_back(car("bmw",90));
+    str.push_back(car("BenZ",50));
+    str.push_back(car("Honda",30));
+    str.push_back(car("Toyota",20));
+    str.push_back(car("cadillac",99));
+    show(str);
+    sort(str.begin(),str.end(),pricecompare);
+    cout<<"rank after-----"<<endl;
+
+    show(str);
+    return 0;
+}
+
+//int main(int argc, char *argv[])
+//{
+//    vector<int> a(10);
+//    vector<int>::iterator it;
+//    for(it=a.begin();it<a.end();it++){
+
+//        *it = rand()%100;
+//    }
+//    for(it=a.begin();it<a.end();it++){
+//        cout<<*it<<"\t"<<flush;
+//    }
+//    cout<<endl;
+//    sort(a.begin(),a.end());
+//    for(it=a.begin();it<a.end();it++){
+//        cout<<*it<<"\t"<<flush;
+//    }
+//    cout<<endl;
+
+//    return 0;
+//}
+
+//int main(int argc, char *argv[])
+//{
+//    double a =2;
+//    double b= 0.1;
+//    try {
+//        double c;
+//        while (1) {
+//           a = a/b;
+//           b = b/1000000;
+////           cout<<"c="<<c<<endl;
+//        }
+
+//    } catch (overflow_error & e) {
+//        cout<<"数学溢出"<<e.what()<<endl;
+//    }
+////    int a =5;
+////    try {
+////        for(int i=5;;i--){
+////            cout<<"i="<<i<<endl;
+////            if(i==0)throw "divider is zero";
+////        }
+
+////    } catch (const char* &a) {
+////        cout<<a<<endl;
+////    }
+//    return 0;
+//}
+
+//class operand{
+//public:
+//    virtual double getresult()=0;
+//    void setnumA(const double A_tmp){
+//        this->A = A_tmp;
+//    }
+//    void setnumB(const double B_tmp){
+//        this->B = B_tmp;
+//    }
+//    virtual ~operand(){
+//        cout<<"xigou operand"<<endl;
+//    }
+//protected:
+//    double A;
+//    double B;
+
+//};
+//class operatoradd:public operand{
+//public:
+//    double getresult(){
+//        return this->A+this->B;
+//    }
+//    ~operatoradd(){
+//        cout<<"xigou operatoradd"<<endl;
+//    }
+//};
+//class operatorsun:public operand{
+//public:
+//    double getresult(){
+//        return this->A-this->B;
+//    }
+//};
+//class operatormul:public operand{
+//public:
+//    double getresult(){
+//        return this->A*this->B;
+//    }
+//};
+//class operatordiv:public operand{
+//public:
+//    double getresult(){
+//        return this->A/this->B;
+//    }
+//};
+//class factory{
+//public:
+
+//    operand* createOper(char ch){
+//        operand * oper = NULL;
+//        switch (ch) {
+//        case '+':
+//            oper = new operatoradd();
+//            break;
+//        case '-':
+//            oper = new operatorsun();
+//            break;
+//        case '*':
+//            oper = new operatormul();
+//            break;
+//        case '/':
+//            oper = new operatordiv();
+//            break;
+//        default:
+//            cout<<"请输入+-*/任意一种运算符"<<endl;
+//            break;
+//        }
+//        return oper;
+//    }
+//};
+//int main()
+//{
+//    factory f1;
+//    operand* oper1 = f1.createOper('+');
+//    oper1->setnumA(2.1);
+//    oper1->setnumB(2.3);
+//    cout<<oper1->getresult()<<endl;
+
+//    delete oper1;
+//    return 0;
+//}
+
+/********************************************
+ *
+ */
+//class animal{
+//public:
+//    animal(const string n):name(n){}
+//    virtual void perform()=0;
+//    string getname(){
+//        return name;
+//    }
+//private:
+//    string name;
+//};
+//class elephant:public animal{
+//public:
+//    elephant(const string name):animal(name){
+//        cout<<"elephant initial "<<this->getname()<<endl;
+//    }
+//    void perform() override{
+//        cout<<"elephant perform dance"<<endl;
+//    }
+//};
+//class dolphin:public animal{
+//public:
+//    dolphin(const string n):animal(n){
+//        cout<<"dolphin initial "<<this->getname()<<endl;
+//    }
+//    void perform() override{
+//        cout<<"dolphin perform ball"<<endl;
+//    }
+//};
+//class lion:public animal{
+//public:
+//    lion(const string n):animal(n){
+//        cout<<"lion initial "<<this->getname()<<endl;
+//    }
+//    void perform() override{
+//        cout<<"lion perform fire"<<endl;
+//    }
+//};
+//class trainer{
+//public:
+//    trainer(const string name_tmp):name(name_tmp){
+//        cout<<"trainer initial "<<this->name<<endl;
+//    }
+//    void animal_play(){
+//        vector<animal*>::iterator it;
+//        for(it=m_animal.begin();it<m_animal.end();it++){
+//            (*it)->perform();
+//        }
+//    }
+//    void animal_add(animal*foo){
+
+//        m_animal.push_back(foo);
+//        cout<<"add "<<(*(m_animal.end()-1))->getname()<<"success"<<endl;
+//        cout<<"total animal count is "<<m_animal.size()<<endl;
+//    }
+//    void animal_delete(animal*foo){
+//        vector<animal*>::iterator it;
+//        for(it=m_animal.begin();it<m_animal.end();it++){
+//            if((*it)==foo){
+//                m_animal.erase(it);
+//                cout<<"delete "<<foo->getname()<<" now count is "<<m_animal.size()<<endl;
+//            }
+
+//        }
+//    }
+//private:
+//    string name;
+//    vector<animal*> m_animal;
+//};
+
+//int main(int argc, char *argv[])
+//{
+//    lion l1("shizi");
+//    elephant e1("daxiang") ;
+//    dolphin d1("haitun");
+//    trainer jack("jack");
+//    jack.animal_add(&l1);
+//    jack.animal_add(&e1);
+//    jack.animal_add(&d1);
+//    jack.animal_play();
+//    jack.animal_delete(&l1);
+//    jack.animal_delete(&e1);
+//    jack.animal_delete(&d1);
+//    return 0;
+//}
+
+/*********************************
+ *         考生
+ *     学神<----学渣
+ */
+//class tester{
+//public:
+//    virtual void test()=0;
+//};
+//class god:public tester{
+//public:
+//    void test(){
+//        cout<<"学神考试100分"<<endl;
+//    }
+//};
+//class Worse:public tester{
+//public:
+//    Worse(tester* t=NULL){
+//        if(NULL==t){
+//            this->m_test = this;
+//        }else {
+
+//            this->m_test = t;
+//        }
+//    }
+//    void test() override{
+//        if(this==this->m_test){
+//            cout<<"学渣考试 0分"<<endl;
+//        }else {
+//            cout<<"学渣请求外援"<<flush;
+//           this->m_test->test();
+//        }
+//    }
+//private:
+//    tester* m_test;
+
+//};
+//int main(int argc, char *argv[])
+//{
+//    cout<<"学神---"<<endl;
+//    god g;
+//    g.test();
+//    cout<<"创建学渣---"<<endl;
+//    Worse w1;
+//    w1.test();
+//    cout<<"学渣请求替考"<<endl;
+//    Worse w2(&g);
+//    w2.test();
+//    return 0;
+//}
 
 //class Car{
 //private:
@@ -82,118 +399,140 @@ using namespace std;
 /*****************************************************************
  *自定义 string 类
  */
-class mystring{
-public:
-    /***************原始构造,可不带参数**************************/
-    mystring(const char* pdata_tmp = NULL){
-        if(pdata_tmp==NULL){
-            this->pdata = new char[1]();
-            cout<<"empty mystring initial"<<endl;
-        }else {
-            this->pdata = new char[strlen(pdata_tmp)+1];
-            strcpy(this->pdata,pdata_tmp);
-            cout<<"mystring initial:"<<this->pdata<<endl;
-        }
-    }
-    /**************复制构造,复制并生成与另一个mystring 对象相同的对象***********/
-    mystring(const mystring& other){
-        // if(strcmp(this->pdata,other.pdata)==0)return;
-        this->pdata = new char[strlen(other.pdata)+1];
-        strcpy(this->pdata,other.pdata);
-        cout<<"copy mystring initial:"<<this->pdata<<endl;
-    }
-    /*************'='重载,字符串直接赋值****************************************/
-    mystring& operator=(const char* pdata_tmp){
-        delete []this->pdata;
-        this->pdata = new char[strlen(pdata_tmp)+1];
-        strcpy(this->pdata,pdata_tmp);
-        cout<<"operator'='reload,char* to mystring:"<<this->pdata<<endl;
-        return *this;
-    }
-    /**************'='重载,其他mystring对象赋值给当前string对象*********************************/
-    mystring& operator=(const mystring& other){
-        delete []this->pdata;
-        this->pdata = new char[strlen(other.pdata)+1];
-        strcpy(this->pdata,other.pdata);
-        cout<<"operator'='reload,string to string:"<<this->pdata<<endl;
-        return *this;
-    }
-    /**************'+'重载,两个string相加**********************************************/
-    mystring operator+(const mystring &other){
-        mystring tmp;
-        delete [] tmp.pdata;
-        tmp.pdata = new char[strlen(this->pdata)+strlen(other.pdata)+1];
-        strcpy(tmp.pdata,this->pdata);
-        strcat(tmp.pdata,other.pdata);
-        return tmp;
-    }
-    char&operator[](const unsigned int i){
-        if(i<strlen(this->pdata))return this->pdata[i];
-        else {
-            cerr<<"argument is over size or less than zero"<<endl;;
-            return this->pdata[0];
-        }
-    }
-    mystring& operator+=(mystring& other){
-        char*tmp = new char[strlen(this->pdata)+strlen(other.pdata)+1]();
-        strcpy(tmp,this->pdata);
-        strcat(tmp,other.pdata);
-        delete []this->pdata;
-        this->pdata = tmp;
-        return *this;
-    }
-    friend ostream& operator<<(ostream& out,mystring&other);
-    friend istream& operator>>(istream& in,mystring&other);
-    ~mystring(){
-        delete [] pdata;
-    }
-    char* pdata;
-};
-ostream& operator<<( ostream& out,mystring&other){
-    // if(other.pdata==NULL)return out;
-    out<<other.pdata<<endl;
-    return out;
-}
-istream& operator>>(istream& in,mystring&other){
-    delete []other.pdata;
-    other.pdata = new char[1024];
-    in>>other.pdata;
-    return in;
-}
-int main()
-{
-    cout<<"nomal initial-----------------"<<endl;
-    mystring rose("hellow");
-    cout<<rose;
-    cout<<"------------------------------"<<endl;
-    cout<<"copy initial------"<<endl;
-    mystring jack=rose;
-    cout<<jack;
-    cout<<"------------------------------"<<endl;
-    mystring zs;
-    cout<<"operator = reload------"<<endl;
-    zs = rose;
-    zs ="hhhhhh";
-    cout<<"------------------------------"<<endl;
-    cout<<"operator + reload-------"<<endl;
-    mystring zzl;
-    zzl = jack+rose;
-    cout<<zzl;
-    cout<<"------------------------------"<<endl;
-    zs = zs+rose+"hello world!!!"+jack;
-    cout<<zs;
-    cout<<"------------------------------"<<endl;
-    cout<<"operator []reload"<<endl;
-    cout<<zs[-1];
-    cout<<"------------------------------"<<endl;
-    cout<<"operator +=reload-------------"<<endl;
-    zs+=jack;
-    cout<<zs;
-    cout<<"------------------------------"<<endl;
-//    cin>>zs;
+//class mystring{
+//public:
+//    /***************原始构造,可不带参数**************************/
+//    mystring(const char* pdata_tmp = NULL){
+//        if(pdata_tmp==NULL){
+//            this->pdata = new char[1]();
+//            cout<<"empty mystring initial"<<endl;
+//        }else {
+//            this->pdata = new char[strlen(pdata_tmp)+1];        //长度必须加1,因为字符串存放末尾加"\0"
+//            strcpy(this->pdata,pdata_tmp);
+//            cout<<"mystring initial:"<<this->pdata<<endl;
+//        }
+//    }
+//    /**************复制构造,复制并生成与另一个mystring 对象相同的对象***********/
+//    mystring(const mystring& other){
+//        // if(strcmp(this->pdata,other.pdata)==0)return;
+//        this->pdata = new char[strlen(other.pdata)+1];
+//        strcpy(this->pdata,other.pdata);
+//        cout<<"copy mystring initial:"<<this->pdata<<endl;
+//    }
+//    /**************** apend 末尾添加char* ****************************************************/
+//    mystring& apend(const char* other){
+//        char*tmp = new char[strlen(this->pdata)+strlen(other)+1]();
+//        strcpy(tmp,this->pdata);
+//        strcat(tmp,other);
+//        delete [] this->pdata;
+//        this->pdata = tmp;
+//        return *this;
+//    }
+//    /**************** apend 末尾添加string****************************************************/
+//    mystring& apend(mystring& other){
+//        char*tmp = new char[strlen(this->pdata)+strlen(other.pdata)+1]();
+//        strcpy(tmp,this->pdata);
+//        strcat(tmp,other.pdata);
+//        delete [] this->pdata;
+//        this->pdata = tmp;
+//        return *this;
+//    }
+//    /*************'='重载,字符串直接赋值****************************************/
+//    mystring& operator=(const char* pdata_tmp){
+//        delete []this->pdata;
+//        this->pdata = new char[strlen(pdata_tmp)+1];
+//        strcpy(this->pdata,pdata_tmp);
+//        cout<<"operator'='reload,char* to mystring:"<<this->pdata<<endl;
+//        return *this;
+//    }
+//    /**************'='重载,其他mystring对象赋值给当前string对象*********************************/
+//    mystring& operator=(const mystring& other){
+//        delete []this->pdata;
+//        this->pdata = new char[strlen(other.pdata)+1];
+//        strcpy(this->pdata,other.pdata);
+//        cout<<"operator'='reload,string to string:"<<this->pdata<<endl;
+//        return *this;
+//    }
+//    /**************'+'重载,两个string相加**********************************************/
+//    mystring operator+(const mystring &other){
+//        mystring tmp;
+//        delete [] tmp.pdata;
+//        tmp.pdata = new char[strlen(this->pdata)+strlen(other.pdata)+1];
+//        strcpy(tmp.pdata,this->pdata);
+//        strcat(tmp.pdata,other.pdata);
+//        return tmp;
+//    }
+//    char&operator[](const unsigned int i){
+//        if(i<strlen(this->pdata))return this->pdata[i];
+//        else {
+//            cerr<<"argument is over size or less than zero"<<endl;;
+//            return this->pdata[0];
+//        }
+//    }
+//    mystring& operator+=(mystring& other){
+//        char*tmp = new char[strlen(this->pdata)+strlen(other.pdata)+1]();
+//        strcpy(tmp,this->pdata);
+//        strcat(tmp,other.pdata);
+//        delete []this->pdata;
+//        this->pdata = tmp;
+//        return *this;
+//    }
+//    friend ostream& operator<<(ostream& out,mystring&other);
+//    friend istream& operator>>(istream& in,mystring&other);
+//    ~mystring(){
+//        delete [] pdata;
+//    }
+//    char* pdata;
+//};
+//ostream& operator<<( ostream& out,mystring&other){
+//    // if(other.pdata==NULL)return out;
+//    out<<other.pdata<<endl;
+//    return out;
+//}
+//istream& operator>>(istream& in,mystring&other){
+//    delete []other.pdata;
+//    other.pdata = new char[1024];
+//    in>>other.pdata;
+//    return in;
+//}
+//int main()
+//{
+//    mystring str1 = "hello ",str2 = "world";
+//    mystring str3;
+//    str3 = str1.apend("str2");
+//    cout<<str3;
+//    cout<<"nomal initial-----------------"<<endl;
+//    mystring rose("hellow");
+//    cout<<rose;
+//    cout<<"------------------------------"<<endl;
+//    cout<<"copy initial------"<<endl;
+//    mystring jack=rose;
+//    cout<<jack;
+//    cout<<"------------------------------"<<endl;
+//    mystring zs;
+//    cout<<"operator = reload------"<<endl;
+//    zs = rose;
+//    zs ="hhhhhh";
+//    cout<<"------------------------------"<<endl;
+//    cout<<"operator + reload-------"<<endl;
+//    mystring zzl;
+//    zzl = jack+rose;
+//    cout<<zzl;
+//    cout<<"------------------------------"<<endl;
+//    zs = zs+rose+"hello world!!!"+jack;
 //    cout<<zs;
-    return 0;
-}
+//    cout<<"------------------------------"<<endl;
+//    cout<<"operator []reload"<<endl;
+//    cout<<zs[-1];
+//    cout<<"------------------------------"<<endl;
+//    cout<<"operator +=reload-------------"<<endl;
+//    zs+=jack;
+//    cout<<zs;
+//    cout<<"------------------------------"<<endl;
+////    cin>>zs;
+////    cout<<zs;
+//    return 0;
+//}
 
 //template<typename T>
 //int seqsearch(const T* list,int len,T key){
